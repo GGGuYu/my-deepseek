@@ -1,4 +1,5 @@
 import NavBar from "./component/NavBar";
+import Chat from "./component/Home";
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
           <NavBar/>
         </div>
         <div className="w-4/5 h-screen">
-
+           <Chat />
         </div>
       </div>
     </>
