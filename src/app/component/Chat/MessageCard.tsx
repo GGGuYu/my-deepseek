@@ -19,7 +19,32 @@ function MessageCard(props:MessageCardProps) {
     return (
         <div>
             {
-                role === 'user' && <div>{'User: '}</div>
+                role === 'user' && (
+                    <></>
+                )
+            }
+            {
+                role === 'assistant' && (
+                    <div className="flex flex-row justify-start mb-1">
+                        <div>🤖：</div>
+                    </div>
+                )
+            }
+            {
+                thinking && thinking !== '' && (
+                <Card 
+                    style={{ 
+                        border: '1px solid #f1f3f5',
+                        boxShadow: '1px 2px 10px rgba(0, 0, 0, 0.2)',
+                        width: 'fit-content', // 宽度自适应内容
+                        maxWidth: '100%',     // 不超过父容器宽度
+                        overflowWrap: 'break-word', // 长文本自动换行
+                        fontSize:'15px'
+                    }}
+                >
+                        <ReactMarkdown>{thinking}</ReactMarkdown>
+                </Card>
+                )
             }
             {
                 <Card 
@@ -29,6 +54,7 @@ function MessageCard(props:MessageCardProps) {
                         width: 'fit-content', // 宽度自适应内容
                         maxWidth: '100%',     // 不超过父容器宽度
                         overflowWrap: 'break-word', // 长文本自动换行
+                        fontSize:'15px'
                     }}
                 >
                         <ReactMarkdown>{content}</ReactMarkdown>

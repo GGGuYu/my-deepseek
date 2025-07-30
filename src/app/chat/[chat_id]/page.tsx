@@ -15,7 +15,7 @@
 'use client';
 
 import { useChat } from '@ai-sdk/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { modelType } from '@/app/component/Welcome';
 import { InputArea } from '@/app/component/Welcome/InputArea';
 import MessageCard from '@/app/component/Chat/MessageCard';
@@ -25,43 +25,60 @@ import { useMessagesStore } from '@/app/store/messages-store';
 export default function Page() {
     //这个钩子的handleSubmit会把input丢进messages中，然后发送请求到后端
     //然后根据返回信息，流式更新messages，因为更新了messages,从而更新页面
-    const { messages, input , handleInputChange, handleSubmit ,append} = useChat({});
+    const { messages, setMessages ,input , handleInputChange, handleSubmit ,append} = useChat({});
     const [model , setModel] = useState<modelType>('deepseek-v3');
     // 下滑锚点
     const endRef = useScollIntoDiv([messages]);
+    //互斥排斥锁
+    const updateLock = useRef(false);
     //防止重复触发effct,不知道为什么会重复，没办法
     const hasSubmitted = useRef(false); // 用 ref 标记是否已提交
 
     const { homeInput , setHomeInput } = useMessagesStore();
 
-    const {setChatInfo , curChatId} = useMessagesStore();
+    const {setChatInfo , curChatId , chatInfos} = useMessagesStore();
+
+
     //做一下防抖，核心就是，只有在500ms之后没有改变，我才回调进行真正的数据操作
     //所以需要一个定时器容器，真正的回调都依靠这个定时器，如果500ms内发生了改变，那么就清除掉这个定时器
     const [timer , setTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
     //定时器必须清理
     useEffect(() => {
        return () => {
-        if(timer){
-            clearTimeout(timer);
+            if(timer){
+                clearTimeout(timer);
+            }
         }
-       }
     } , []);
 
-    useEffect(() => {
+    //回复的更新写入zustand
+    useLayoutEffect(() => {
         //是否真正baocun，要防抖
         if(timer) clearTimeout(timer);
 
-        const newTimer = setTimeout(() => {
-            //baocun messages
-            if(curChatId) setChatInfo(curChatId , messages);
-            console.log('更新message了')
-        } , 500);
+        //判断初始化hasSubmitted可以防止防抖产生的chatinfo定时器更新的闪屏
+        if(hasSubmitted.current && !updateLock.current && curChatId && !homeInput){
+            updateLock.current = true;//创建要拿锁，真正的修改也要拿锁
+            const newTimer = setTimeout(() => {
+                if(!updateLock.current) {
+                    updateLock.current = true;
+                    //baocun messages
+                    if(curChatId) {
+                        setChatInfo(curChatId , messages);
+                    }
+                    console.log('更新chatinfos了')
+                    updateLock.current = false;
+                }
+            } , 500);
+            updateLock.current = false;
 
-        setTimer(newTimer);//为了判断，必须要用一个这个容器
+            setTimer(newTimer);//为了判断，必须要用一个这个容器
+        }
+
         
     } , [messages])
 
-    //only once
+    //only once 初始化
     useEffect(() => {
         if(homeInput && !hasSubmitted.current) {
             // 直接调用 append 提交
@@ -72,6 +89,23 @@ export default function Page() {
             //不知道为什么，会执行两次Effect,只能用ref防止重复了
             hasSubmitted.current = true;
         };
+        //更新messages为chatinfo
+        console.log('尝试更新messages')
+        if(!updateLock.current) {
+            updateLock.current = true;
+            if(homeInput === undefined && curChatId){
+                //尝试更新messages为当前ID的那个储存的
+                const chatInfosFilter = chatInfos?.filter((item) => item.chatId === curChatId);
+                if(!chatInfosFilter || chatInfosFilter.length <= 0) return;
+                const chatInfo = chatInfosFilter[0];
+                if(chatInfo){
+                    console.log('gengxin messages');
+                    setMessages(chatInfo.historyMessages);
+                    console.log(`msgs = ${messages}`)
+                }
+            }
+            updateLock.current = false;
+        }
     } , [])
 
     //handleModelChange

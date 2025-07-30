@@ -25,19 +25,19 @@ export function InputArea({value , model ,onInputChange, onModelChange , handleS
         <>
             {/* 输入框 */}
             <div className="flex flex-col items-center justify-center mt-4
-            shadow-lg border-[1px] border-gray-300 h-35 rounded-lg">
+            shadow-lg border-[1px] border-gray-300 h-35 rounded-2xl">
                 <form className="w-full h-[100%]" onSubmit={(e) => {handleSubmit(e)}} >
                         <textarea onKeyDown={handleKeyDown} className="w-[100%] h-3/5 p-3 focus:outline-none resize-none"
                             value={value} onChange={onInputChange}
                         >
                         </textarea>
                         <div className="w-full h-2/5 flex flex-row items-center px-3 mb-3">
-                            <div className={`flex flex-col justify-center text-center w-[130px] h-[30px] border-[1px] border-solid border-[#000] rounded-lg cursor-pointer
+                            {/* <div className={`flex flex-col justify-center text-center w-[130px] h-[30px] border-[1px] border-solid border-[#000] rounded-lg cursor-pointer
                                 ${model === 'deepseek-r1' ? 'bg-blue-100 text-blue-500' : ''}`}
                                 onClick={onModelChange}
                                 >
                                 <span>深度思考(R1)</span>
-                            </div>
+                            </div> */}
                             {/* 占位 */}
                             <div className="flex-auto"></div>
                             {/* 发送按钮 */}

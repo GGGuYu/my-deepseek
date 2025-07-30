@@ -14,7 +14,7 @@ interface State {
 
 interface Actions {
     addChatInfo: (historyMessages: UIMessage[]) => number;
-    setCurChatId:(value:number) => void;
+    setCurChatId:(value:number | undefined) => void;
     deleteChatInfo: (chatId: number | undefined) => void;
     setChatInfo:(chatId:number , historyMessages:UIMessage[]) => void;
     setHomeInput:(input:string | undefined) => void;
