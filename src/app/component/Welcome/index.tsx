@@ -5,7 +5,7 @@ import { InputArea } from "./InputArea";
 
 export type modelType = 'deepseek-v3' | 'deepseek-r1';
 
-function Chat() {
+function Welcome() {
 
     const [input , setInput] = useState<string>('');
     const [model , setModel] = useState<modelType>('deepseek-v3');
@@ -16,7 +16,7 @@ function Chat() {
         let content = input;
         setInput('');
         if(content.trim() === '') return;
-        console.log(content);
+        // console.log(content);
     }
 
     //handleModelChange
@@ -34,7 +34,7 @@ function Chat() {
                 <span className="text-bold text-2xl text-center">
                     有什么可以帮您的吗？
                 </span>
-                <InputArea value={input} onInputChange={(value) => {setInput(value)}}
+                <InputArea value={input} onInputChange={(e) => {setInput(e.target.value)}}
                     model={model}
                     onModelChange={handleModelChange}
                     handleSubmit={handleSubmit}
@@ -44,4 +44,4 @@ function Chat() {
     )
 }
 
-export default Chat;
+export default Welcome;

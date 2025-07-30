@@ -4,7 +4,7 @@ import { type modelType } from ".";
 interface InputAreaProps {
     value:string;
     model:modelType;
-    onInputChange:(value:string) => void;
+    onInputChange:(e:any) => void;
     onModelChange:() => void;
     handleSubmit:(e:React.FormEvent<HTMLFormElement>) => void;
 }
@@ -28,7 +28,7 @@ export function InputArea({value , model ,onInputChange, onModelChange , handleS
             shadow-lg border-[1px] border-gray-300 h-35 rounded-lg">
                 <form className="w-full h-[100%]" onSubmit={(e) => {handleSubmit(e)}} >
                         <textarea onKeyDown={handleKeyDown} className="w-[100%] h-3/5 p-3 focus:outline-none resize-none"
-                            value={value} onChange={(e) => {onInputChange(e.target.value)}}
+                            value={value} onChange={onInputChange}
                         >
                         </textarea>
                         <div className="w-full h-2/5 flex flex-row items-center px-3 mb-3">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import "./globals.css";
+import NavBar from "./component/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AntdRegistry>{children}</AntdRegistry>
+        <div className="flex flex-row">
+          <div className="w-1/5 h-screen bg-gray-50">
+            <NavBar/>
+          </div>
+          <div className="w-4/5 h-screen">
+            <AntdRegistry>{children}</AntdRegistry>
+          </div>
+        </div>
+        
       </body>
     </html>
   );
