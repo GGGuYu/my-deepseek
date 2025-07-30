@@ -11,6 +11,7 @@ const deepseek = createDeepSeek({
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
+  console.log('post in')
   const { messages } = await req.json();//aisdk hadleSubmit shi huode
 
   const result = streamText({
