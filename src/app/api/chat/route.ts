@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   const { messages } = await req.json();//aisdk hadleSubmit shi huode
 
   const result = streamText({
-    model: deepseek('deepseek-r1'),
+    model: deepseek('deepseek-v3'),
     system:process.env.SYSTEM_PROMPT,
     messages,
   });

@@ -1,17 +1,4 @@
 
-
-//route('/chat/[chat_id]')
-// export default async function Page({
-//   params,
-// }: {
-//   params: Promise<{ chat_id: string }> //找路由中的chat_id
-// }) {
-//   const { chat_id } = await params //接受approuter程序找到的chat_id
-//   return <div>My Post: {chat_id}</div>
-// }
-
-
-
 'use client';
 
 import { useChat } from '@ai-sdk/react';
