@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { InputArea } from "./InputArea";
+import { useRouter } from "next/navigation";
+import { UIMessage } from "ai";
+import { useMessagesStore } from "@/app/store/messages-store";
 
 export type modelType = 'deepseek-v3' | 'deepseek-r1';
 
@@ -10,13 +13,21 @@ function Welcome() {
     const [input , setInput] = useState<string>('');
     const [model , setModel] = useState<modelType>('deepseek-v3');
 
+    const { setHomeInput,  addChatInfo , setCurChatId} = useMessagesStore();
+    const router = useRouter();
+
     //处理发消息
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();//禁止掉原有事件逻辑,但是可以继承submit的触发方式
         let content = input;
         setInput('');
         if(content.trim() === '') return;
-        // console.log(content);
+        const msgs:UIMessage[] = [];
+        const chatId = addChatInfo(msgs);
+        //设置发了啥，然后跳转新增的聊天页面
+        setCurChatId(chatId);
+        setHomeInput(content);
+        router.push(`/chat/${chatId}`);
     }
 
     //handleModelChange

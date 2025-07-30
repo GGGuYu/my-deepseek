@@ -1,6 +1,6 @@
 import { role } from "@/app/types";
 import { Card } from "antd";
-import { CSSProperties } from "react";
+import ReactMarkdown from 'react-markdown';
 
 export interface MessageCardProps {
     role:role | string;
@@ -31,7 +31,7 @@ function MessageCard(props:MessageCardProps) {
                         overflowWrap: 'break-word', // 长文本自动换行
                     }}
                 >
-                        <p>{content}</p>
+                        <ReactMarkdown>{content}</ReactMarkdown>
                 </Card>
             }
         </div>
