@@ -1,6 +1,6 @@
 import { createDeepSeek } from '@ai-sdk/deepseek';
 import { streamText } from 'ai';
-
+import { errorHandler } from '@/error/getChatAPIError';
 //ds实例
 const deepseek = createDeepSeek({
   apiKey: process.env.DEEPSEEK_API_KEY,
@@ -20,5 +20,8 @@ export async function POST(req: Request) {
     messages,
   });
 
-  return result.toDataStreamResponse();
+  // return result.toDataStreamResponse();
+  return result.toDataStreamResponse({
+    getErrorMessage: errorHandler,
+  });
 }
