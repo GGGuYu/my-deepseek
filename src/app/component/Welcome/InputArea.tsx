@@ -25,7 +25,9 @@ export function InputArea({value , model ,onInputChange, onModelChange , handleS
         <>
             {/* 输入框 */}
             <div className="flex flex-col items-center justify-center mt-4
-            shadow-lg border-[1px] border-gray-300 h-35 rounded-2xl">
+            shadow-lg border-[1px] border-gray-300 h-35 rounded-2xl
+            hover:scale-[1.02] hover:shadow-[3px_4px_12px_rgba(0,0,0,0.5)] hover:border-black
+            transition-all duration-200 ease-in-out">
                 <form className="w-full h-[100%]" onSubmit={(e) => {handleSubmit(e)}} >
                         <textarea onKeyDown={handleKeyDown} className="w-[100%] h-3/5 p-3 focus:outline-none resize-none"
                             value={value} onChange={onInputChange}
@@ -42,7 +44,9 @@ export function InputArea({value , model ,onInputChange, onModelChange , handleS
                             <div className="flex-auto"></div>
                             {/* 发送按钮 */}
                             <button 
-                                className="flex flex-col justify-center text-center bg-blue-300 w-[80px] h-[30px] border-[1px] border-solid border-[#000] rounded-full cursor-pointer" type="submit">
+                                className="font-bold flex flex-col justify-center text-center bg-blue-300 w-[80px] h-[30px] border-[1px] border-solid border-[#000] rounded-full cursor-pointer
+                                hover:scale-[1.05] hover:text-lg hover:shadow-[2px_3px_8px_rgba(0,0,0,0.7)] hover:border-black
+                                transition-all duration-200 ease-in-out" type="submit">
                                 <span>发送</span>
                             </button>
                         </div>

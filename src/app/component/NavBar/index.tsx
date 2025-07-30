@@ -17,30 +17,33 @@ function NavBar() {
     }
 
     //点击卡片改变 对话
-    const handleChangeChat = (chatId:number) => {
-        console.log('切换chat页面')
+    const handleChangeChat = (chatId:number | undefined) => {
         if(!chatId) return;
+        console.log('切换chat页面')
         setHomeInput(undefined);
         setCurChatId(chatId);
         router.push(`/chat/${chatId}`)
     }
 
     return (
-        <div className="p-[1vh]">
+        <div className="w-full p-[2vh]">
             <div 
                 onClick={handleNewChat}
-                className="mb-3 shadow-[1px_2px_10px_rgba(0,0,0,0.5)] h-[6vh] mt-2 rounded-2xl bg-[#DBEAFE] flex flex-col justify-center items-center"
+                className="cursor-pointer mb-3 w-full shadow-[1px_2px_10px_rgba(0,0,0,0.5)] h-[6vh] mt-2 rounded-2xl bg-[#DBEAFE] flex flex-row justify-center items-center
+                hover:scale-[1.02] hover:shadow-[3px_4px_12px_rgba(0,0,0,0.5)] hover:border-black
+                transition-all duration-200 ease-in-out"
             >
-                <span className="text-[#91A8FE] font-bold">开启新对话</span>
+                <span className="text-[#91A8FE] font-bold">开启新对话！</span>
             </div>
-            <div className="flex flex-col gap-2 justify-center">
+            <div className="w-full flex flex-col justify-center">
                 {
                     chatInfos?.map((chatInfo) => (
-                        <div key={chatInfo.chatId} 
-                            onClick={() => {handleChangeChat(chatInfo.chatId)}}
-                            className="flex flex-col justify-center items-center p-[3px]"
-                        >
-                            {chatInfo.chatId && <NavBarItem isSelected={curChatId === chatInfo.chatId ? true : false} content={chatInfo.historyMessages[0]?.content}/>}
+                        <div key={chatInfo.chatId} className="w-full h-[100%] p-[2vh]">
+                            <div
+                                className="w-full h-[100%] cursor-pointer flex flex-col justify-center items-center"
+                            >
+                                {chatInfo.chatId && <NavBarItem handleChatChange={handleChangeChat} chatId={chatInfo.chatId}  isSelected={curChatId === chatInfo.chatId ? true : false} content={chatInfo.historyMessages[0]?.content}/>}
+                            </div>
                         </div>
                     ))
                 }

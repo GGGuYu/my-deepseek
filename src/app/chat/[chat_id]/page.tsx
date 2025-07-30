@@ -56,7 +56,7 @@ export default function Page() {
                     console.log('更新chatinfos了')
                     updateLock.current = false;
                 }
-            } , 500);
+            } , 300);
             updateLock.current = false;
 
             setTimer(newTimer);//为了判断，必须要用一个这个容器
@@ -109,7 +109,7 @@ export default function Page() {
             {messages.map(message => (
                 // this row need 1row 100% full 1 msg by 1 msg no 2msg in row
                 // box layout right or left
-                <div key={message.id} className={`w-full box-border p-[2vh] flex flex-row ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div key={message.id} className={`w-full box-border p-[4vh] flex flex-row ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     {/* message box max-width:50% cant bigger 
                      and card layout , right or left but cant over the max*/}
                     <div className={`w-[50%] flex flex-row ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -125,7 +125,7 @@ export default function Page() {
         <div className='h-4' ref={endRef}></div>
 
         {/* 输入框 */}
-        <div className='w-full box-border p-[2vh]'>
+        <div className='w-full box-border p-[4vh]'>
             <InputArea value={input} onInputChange={handleInputChange}
                 model={model}
                 onModelChange={handleModelChange}
