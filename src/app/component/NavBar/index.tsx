@@ -26,7 +26,7 @@ function NavBar() {
     }
 
     return (
-        <div className="w-full p-[2vh]">
+        <div className="w-full h-screen p-[2vh] flex flex-col justify-start">
             <div 
                 onClick={handleNewChat}
                 className="cursor-pointer mb-3 w-full shadow-[1px_2px_10px_rgba(0,0,0,0.5)] h-[6vh] mt-2 rounded-2xl bg-[#DBEAFE] flex flex-row justify-center items-center
@@ -35,10 +35,10 @@ function NavBar() {
             >
                 <span className="text-[#91A8FE] font-bold">开启新对话！</span>
             </div>
-            <div className="w-full flex flex-col justify-center">
+            <div className="w-full flex-1 flex flex-col justify-start overflow-y-auto">
                 {
                     chatInfos?.map((chatInfo) => (
-                        <div key={chatInfo.chatId} className="w-full h-[100%] p-[2vh]">
+                        <div key={chatInfo.chatId} className="w-full h-auto p-[2vh]">
                             <div
                                 className="w-full h-[100%] cursor-pointer flex flex-col justify-center items-center"
                             >

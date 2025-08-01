@@ -34,7 +34,7 @@ export const useMessagesStore = create<State & Actions>((set) => ({
             historyMessages
         };
         set((state) => ({
-            chatInfos: [...state.chatInfos, newChatInfo]
+            chatInfos: [newChatInfo , ...state.chatInfos]
         }));
         return chatId;
     },
