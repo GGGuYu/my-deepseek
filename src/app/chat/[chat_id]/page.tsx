@@ -104,25 +104,28 @@ export default function Page() {
   return (
     // messages and inputs layout
     <div className='flex flex-col h-screen justify-between items-center w-full'>
-        {/* messages row layout */}
-        <div className='w-full flex flex-col gap-[6px]'>
-            {messages.map(message => (
-                // this row need 1row 100% full 1 msg by 1 msg no 2msg in row
-                // box layout right or left
-                <div key={message.id} className={`w-full box-border p-[4vh] flex flex-row ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    {/* message box max-width:50% cant bigger 
-                     and card layout , right or left but cant over the max*/}
-                    <div className={`w-[50%] flex flex-row ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <MessageCard role={message.role} content={message.content} />
+        {/* 消息的外层容器可以滚动 */}
+        <div className='w-full flex-1 overflow-y-auto'>
+            {/* messages row layout */}
+            <div className='w-full flex flex-col gap-[6px]'> 
+                {messages.map(message => (
+                    // this row need 1row 100% full 1 msg by 1 msg no 2msg in row
+                    // box layout right or left
+                    <div key={message.id} className={`w-full box-border p-[4vh] flex flex-row ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                        {/* message box max-width:50% cant bigger 
+                        and card layout , right or left but cant over the max*/}
+                        <div className={`w-[50%] flex flex-row ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                            <MessageCard role={message.role} content={message.content} />
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
+            {/* 自动下滑用的一个dom元素,锚点 
+                滑到这个元素
+            */}
+            <div className='h-4' ref={endRef}></div>
         </div>
 
-        {/* 自动下滑用的一个dom元素,锚点 
-            滑到这个元素
-        */}
-        <div className='h-4' ref={endRef}></div>
 
         {/* 输入框 */}
         <div className='w-full box-border p-[4vh]'>
