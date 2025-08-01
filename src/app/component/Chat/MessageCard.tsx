@@ -1,7 +1,9 @@
 "use client"
 import { role } from "@/app/types";
 import { Card } from "antd";
-import ReactMarkdown from 'react-markdown';
+// import ReactMarkdown from 'react-markdown';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { CopyOutlined , CheckOutlined } from '@ant-design/icons'
 import { useEffect, useState } from "react";
 
@@ -77,7 +79,7 @@ function MessageCard(props:MessageCardProps) {
                         fontSize:'15px'
                     }}
                 >
-                        <ReactMarkdown>{thinking}</ReactMarkdown>
+                        <Markdown remarkPlugins={[remarkGfm]} children={thinking}></Markdown>
                 </Card>
                 )
             }
@@ -93,7 +95,7 @@ function MessageCard(props:MessageCardProps) {
                         fontSize:'15px'
                     }}
                 >
-                        <ReactMarkdown>{content}</ReactMarkdown>
+                        <Markdown remarkPlugins={[remarkGfm]} children={content}></Markdown>
                 </Card>
             }
             <div className="mt-3 flex flex-row items-center gap-2">

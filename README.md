@@ -24,3 +24,4 @@ navigator在dev模式运行正常，部署后却不行，暂时不懂
 
 ## 支持markdown渲染
 react-markdown库
+remark-gfm解决表格问题
