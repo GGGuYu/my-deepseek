@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputArea } from "./InputArea";
 import { useRouter } from "next/navigation";
 import { UIMessage } from "ai";
@@ -13,7 +13,7 @@ function Welcome() {
     const [input , setInput] = useState<string>('');
     const [model , setModel] = useState<modelType>('deepseek-v3');
 
-    const { setHomeInput,  addChatInfo , setCurChatId} = useMessagesStore();
+    const { setHomeInput,  addChatInfo , setCurChatId,canSend , changeCanSend} = useMessagesStore();
     const router = useRouter();
 
     //处理发消息
@@ -35,6 +35,11 @@ function Welcome() {
         if(model === 'deepseek-v3') setModel('deepseek-r1');
         else if(model === 'deepseek-r1') setModel('deepseek-v3');
     }
+
+    //首页一定是ture,可以发送
+    useEffect(() => {
+        if(!canSend) changeCanSend(true);
+    } , [canSend])
 
     return (
         <div className="h-screen flex flex-col items-center justify-center">

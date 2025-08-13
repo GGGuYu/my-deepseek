@@ -25,3 +25,6 @@ navigator在dev模式运行正常，部署后却不行，暂时不懂
 ## 支持markdown渲染
 react-markdown库
 remark-gfm解决表格问题
+
+## canSend,AI在回复的时候不允许发送，遇到了闭包问题
+解决闭包 或者 改成本地变量，不用zustand，因为只有在page中才判断

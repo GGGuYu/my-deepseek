@@ -42,7 +42,7 @@ export function NavBarItem({content, handleChatChange , chatId , isSelected}:Nav
             <div 
             className="w-full h-[100%] flex flex-row items-center"
             >
-                <div className="overflow-hidden">{content?.substring(0, 15)}</div>
+                <div className="overflow-hidden">{content?.substring(0, 12)}</div>
                 <div className="flex-1"></div>
                 <div className="w-8 h-8 flex flex-row items-center justify-end">
                     <div className="w-8 h-8 cursor-pointer flex flex-col justify-center items-center border-1 border-[#acf] rounded-lg

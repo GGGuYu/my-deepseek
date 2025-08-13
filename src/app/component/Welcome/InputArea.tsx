@@ -1,5 +1,6 @@
 import React from "react";
 import { type modelType } from ".";
+import { useMessagesStore } from "@/app/store/messages-store";
 
 interface InputAreaProps {
     value:string;
@@ -11,15 +12,24 @@ interface InputAreaProps {
 
 
 export function InputArea({value , model ,onInputChange, onModelChange , handleSubmit}:InputAreaProps) {
-    
+    const {canSend , changeCanSend} = useMessagesStore();
+
     const handleKeyDown = (e:any) => {
         if (e.key === 'Enter') {
-            e.preventDefault();
-            e.target.form.requestSubmit();//触发提交
+            if(canSend)
+            {
+                e.preventDefault();
+                e.target.form.requestSubmit();//触发提交
+            }
         }
         // 正常按 Enter 提交
         // Ctrl+Enter huandang
     };
+
+    const stopAnswer = () => {
+        
+    }
+
 
     return (
         <>
@@ -43,12 +53,24 @@ export function InputArea({value , model ,onInputChange, onModelChange , handleS
                             {/* 占位 */}
                             <div className="flex-auto"></div>
                             {/* 发送按钮 */}
-                            <button 
-                                className="font-bold flex flex-col justify-center text-center bg-blue-300 w-[80px] h-[30px] border-[1px] border-solid border-[#000] rounded-full cursor-pointer
-                                hover:scale-[1.05] hover:text-lg hover:shadow-[2px_3px_8px_rgba(0,0,0,0.7)] hover:border-black
-                                transition-all duration-200 ease-in-out" type="submit">
-                                <span>发送</span>
-                            </button>
+                            {
+                                canSend ? (
+                                    <button 
+                                        className="font-bold flex flex-col justify-center text-center bg-blue-300 w-[80px] h-[30px] border-[1px] border-solid border-[#000] rounded-full cursor-pointer
+                                        hover:scale-[1.05] hover:text-lg hover:shadow-[2px_3px_8px_rgba(0,0,0,0.7)] hover:border-black
+                                        transition-all duration-200 ease-in-out" type="submit">
+                                        <span>发送</span>
+                                    </button>
+                                ) : (
+                                    <button 
+                                        onClick={stopAnswer}
+                                        className="font-bold flex flex-col justify-center text-center bg-red-300 w-[80px] h-[30px] border-[1px] border-solid border-[#000] rounded-full cursor-pointer
+                                        hover:scale-[1.05] hover:text-lg hover:shadow-[2px_3px_8px_rgba(0,0,0,0.7)] hover:border-black
+                                        transition-all duration-200 ease-in-out">
+                                        <span>停止回复</span>
+                                    </button>
+                                )
+                            }
                         </div>
                 </form>
             </div>
